@@ -1,0 +1,12 @@
+extends layout
+block content
+  h1= title
+    div= error
+    div
+      form(action="/login", method="POST")
+       p
+        input.form-control(name="id", type="text", placeholder="2017123456")
+       p
+        input.form-control(name="password", type="password", placeholder="********")
+       p
+        button.btn.btn-lg.btn-primary.btn-block(type="submit") Log in
