@@ -1,8 +1,12 @@
 var mongoose = require('mongoose');
 
+var User = mongoose.model('User', userSchema);
+
 var userSchema = new mongoose.Schema({
-  id: String,
-  password: String,
+  id: { type: String, required: true, unique: true},
+  name: String,
+  password: { type: String, required: true},
+  admin: Boolean,
 });
 
 userSchema.methods.comparePassword = (inputPassword, cb) => {
@@ -13,4 +17,4 @@ userSchema.methods.comparePassword = (inputPassword, cb) => {
   }
 };
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('User', userSchema);

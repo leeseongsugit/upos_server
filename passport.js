@@ -13,7 +13,7 @@ module.exports = () => {
   });
 
   passport.use(new LocalStrategy({
-    usernameField: 'id',
+    idField: 'id',
     passwordField: 'password',
     session: true,
     passReqToCallback: false,
@@ -30,3 +30,5 @@ module.exports = () => {
     });
   }));
 };
+
+module.exports = passport;

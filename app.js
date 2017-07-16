@@ -1,18 +1,21 @@
+// 모듈 추출
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var db = require('./db');
-var route = require('./route');
+var route = require('./routes/route');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var fs = require('fs');  //파일 로드 사용
 var session = require('express-session');
-var passport = require('passport');
+var passport = require('./passport');
+var user = require('./user');
 
-var index = require('./routes/index');
+var route = require('./routes/route');
 var users = require('./routes/users');
 
+//웹서버 생성
 var app = express();
 
 // view engine setup
@@ -27,16 +30,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use(session({   //session activation
+//세션 활성화
+app.use(session({
   secret : 'mysecret',
   resave: true,
   saveUninitialized: false
 }));
+
+//패스포트 초기화, 세션 사용
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+//db, passport 실행
 db();
-//passport();
+passport();
 
 app.use('/', route);
 app.use('/users', route);
