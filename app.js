@@ -11,6 +11,7 @@ var fs = require('fs');  //파일 로드 사용
 var session = require('express-session');
 var passport = require('./passport');
 var user = require('./user');
+//var vidStremer = require('vid-streamer');  // 동영상 스트리밍
 
 var route = require('./routes/route');
 var users = require('./routes/users');
@@ -45,6 +46,7 @@ app.use(passport.session());
 //db, passport 실행
 db();
 passport();
+
 
 app.use('/', route);
 app.use('/users', route);

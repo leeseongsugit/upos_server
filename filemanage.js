@@ -1,62 +1,72 @@
+var grid = require('gridfs-stream');
+var mongoose = require('mongoose');
+var ObjectID = require('mongoose').mongo.objectID;
 var multer = require('multer');
 var fs = require('fs');
-var mongoose = require('mongoose');
-var user = require('./user');
+var mongo = mongoose.mongo;
 
-app.use(multer({dest'../upload/'}));
 
-//DB연결
-mongoose.connect('mongodb://localhost/DBData');
-var db = mongoose.connection;
-db.once('open', function(err){
-  if(err) console.log(err);
-});
+//DB연결 - 분산처리
+var connection = mongoose.createConnection(mongodb://localhost/DBdata);
+var connection.db;
+var gfs = grid(db, mongo);
 
-//업로드 요청처리
+
+/*웹서버 채팅*/
+app.use(multer({
+  dest: '../upload/',
+  limits: {
+    fileSize: 1024*1000*100 //filesize < 100MB
+  }
+}));
+
+
+//업로드 - 분산처리
 app.post('/upload', function(req, res){
   var title = req.body.title;  //inputText의 name Value를 가져옴
   var fileObj = req.files.myFile;
   var orgFileName = fileObj.originalname;  //원본파일명 저장
-  var saveFileName = fileObj.name;  //저장된 파일명
-  //추출한 데이터를 Object에 담음
-  var obj = {"title":title, "orgFileName":orgFileName, "saveFileName": saveFileName};
-  //DBData 객체에 입력
-  var newData = newDBData(obj);
-  newData.save(function(err){  //DB에 저장
-    if(err) res.send(err);
-    res.end('ok');
+  var savePath = __dirname + '/../upload/' + saveFileName;  //저장된 파일명
+  //get gfs output stream
+  var writeStream = gfs.createWriteStream({
+    'filename': orgFileName,
+    'metadata': {
+      'title': title
+    }
+  });
+  //경로에 업데이트 된 파일을 읽어들여서 girdfs 출력 스트림에 연결
+  fs.createReadStream(savePath).pipr(writeStream);
+  //스트림 연결 종료 -> close 이벤트 발생
+  writeStream.on('close', function(file){
+    //몽고DB는 데이터 저장시 무조건 파일시스템을 거쳐가기 때문에 파일시스템의 데이터는 삭제
+    fs.unlink(savePath, function() {});
+    res.send('ok');
   });
 });
+
 
 //Download 요청 처리
 app.get('/download', function(req, res){
   var _id = req.query.id;
-  DBData.findOne({"_id":_id})
-  .select("orgFileName saveFileName")
-  .exec(function(err, data){
-    var filePath = __dirname + "/../upload/" + data.saveFileName;
-    var fileName = data.orgFileName;
-    //응답 헤더에 파일 이름과 Type을 명시
-    res.setHeader("Content-Disposition", "attachment;filename=" + encodeURI(filename));
-    res.setHeader("Content-Type","binary/octet-stream");
-    //filePath에 엤는 파일 스트림 객체를 얻음
-    var fileStream = fs.createReadStrem(filePath);
-    //Download(res 객체에 전송)
-    fileStream.pipe(res);
-  });
+  gfs.files.find({'_id': objectId})
+    .toArray(function(err, files) {
+      if(err).res.send(err);
+      var filename = files[0].filename;
+      //gfs에서 읽어올 스트림 객체 가져오기
+      var readStream = gfs.createReadStream({'_id': _id});
+      //Download
+      res.setHeader("Content-Disposition", "attachment;filename=" + encodeURI(filename));
+      res.setHeader("Content-Type","application/octet-stream");
+      //readStream에 있는 Data를 res객체에 옮긴다
+      readStream.pipe(res);
+  })
 });
 
 //삭제 요청 처리
 app.get("/delete", function(req, res){
   var _id = req.query.id;
-  DBData.findOne({"_id":_id})
-  .select("saveFileName")
-  .exec(function(err, data){
-    var filePath = __dirname + "/../upload/" + data.saveFileName;
-    fs.unlink(filePath, function(){
-      DBData.remove({"_id":_id}, function(err){
-        if(err) res.send(err);
-      res.end("ok");
-    });
+  gfs.remove({'_id': ObjectID)(_id)}, function(err) {
+    if(err) res.send(err);
+    res.end("ok");
   });
 });

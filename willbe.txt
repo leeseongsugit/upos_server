@@ -1,0 +1,17 @@
+1.  login(passport, session이용)-라우팅설정 빼고 완료
+
+2.  mongoDB 연동(mongoose 모듈 사용)-라우팅설정 빼고 완료
+
+3.  File up/download(gridfs-stream이용 분산처리)-라우팅설정 빼고 완료
+
+4.  DB설계
+    user DB - id, name, password, major, classNo list
+    (classNo를 통해 class자료에 접근)
+    classDB - classNo, className
+    수업별로 collection? document?를 만들어서 자료가 저장될수 있게 함.
+
+5. Jade작성
+
+6. pdf, hwp, ppt 뷰어 (html로 변형시켜서 보여줄건지, viewer가 따로 실행되서 보여줄건지)
+
+7. 동영상/음성파일(스트리밍? 프로그램?)

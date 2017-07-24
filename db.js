@@ -1,4 +1,4 @@
-/*var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 module.exports = () => {
   function connect() {
     mongoose.connect('localhost:27017', function(err) { //mongodb connect
@@ -14,11 +14,12 @@ module.exports = () => {
 };
 
 module.exports = db;
-*/
+/*
 
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 var user = require('./user');
+
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function(){
   console.log("connect successfully");
@@ -27,3 +28,4 @@ db.once("open", function(){
 mongoose.connect("mongodb://localhost/DBData");
 
 module.exports = db;
+*/
