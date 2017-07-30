@@ -7,16 +7,18 @@ router.get('/', (req, res) => {
   res.render('login');
 });
 
-router.get('/:name', (req, res) => {
-  User.find({ name: req.params.name }, (err, user) => {
-    res.render('main', { user: user } );
-  });
-});
-
-router.post('/login', passport.authenticate('local', {
-  failureRedirect: '/'
+router.post('/', passport.authenticate('local', {
+  successRedirect: '/home',
+  failureRedirect: '/login'
 }), (req, res) => {
   res.redirect('/');
 });
+
+router.get('/home', (req, res) => {
+  User.find({ name: req.params.name }, (err, user) => {
+    res.render('home', { user: user } );
+  });
+});
+
 
 module.exports = router;

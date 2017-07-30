@@ -13,7 +13,7 @@ var passport = require('./passport');
 var user = require('./user');
 //var vidStremer = require('vid-streamer');  // 동영상 스트리밍
 
-var route = require('./routes/route');
+var route = require('./routes/index');
 var users = require('./routes/users');
 
 //웹서버 생성
@@ -49,7 +49,7 @@ passport();
 
 
 app.use('/', route);
-app.use('/users', route);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,38 @@
+#nav {
+        width:700px;
+        height:40px;
+        background-color:grey;
+}
+#nav ul {
+        /* menubar n line -> 1 line*/
+        display:inline;
+        /* 메뉴바 앞 불필요한 공간 제거 */
+        padding-left:0px;
+        /* 오른쪽 정렬 */
+        float:right;
+        /* 미세조정 */
+        margin: 10px 10px 10px 10px;
+}
+#nav ul li{
+        /* menubar n line -> 1 line*/
+        display:inline;
+        /* border line make at left */
+        border-left: 1px solid black;
+        /* 메뉴와 경계선 사이의 간격 넓히기 */
+        padding:0px 7px 0px 10px;
+}
+#nav ul li:first-child {
+        /* first menu's border line delete */
+        border-left: none;
+}
+#nav ul li a {
+        /* 밑줄 제거 */
+        text-decoration:none;
+        /* 메뉴 색 변경 */
+        color:white;
+}
+#nav_menu a:hover{
+        /*  링크에 마우스 롤 오버시 하단에 밑줄 생김 */
+        color:#D4F4FA;
+        border-bottom:3px solid white;
+}

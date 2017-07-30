@@ -1,0 +1,22 @@
+html
+  head
+    title upos_server
+  body
+    h2 강의명
+    select(name='classname')
+      option(value='') 강의명
+      option(value='ite0001') 컴퓨터 보안
+      option(value='ite0002') 데이터 베이스
+      option(value='abc0000') 경영학 개론
+    h2 주차
+    select(name='weeks')
+      option(value='') 주차
+      - for(var i = 1; i < 17; i++) {
+          p
+            option(value='w#{i}') #{i}주차
+      -}
+    h2 유형
+    select(name='type')
+      option(value='') 유형
+      option(value='note') 강의노트
+      option(value='present') 발표자료
