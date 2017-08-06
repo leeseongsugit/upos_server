@@ -1,0 +1,15 @@
+html
+  head
+    meta(charset='utf-8')
+    title upos_server
+
+  body(topmargin='5', leftmargin='5')
+    div(align="left",style='float;width:100;height:30%')
+      include ../mainmenu
+
+    div
+      div(align="center",style='float:left;width:25%;height:100%')
+        include mypage_menu
+
+      div(align="center",style='clear:right;float:right;width:75%;height:100%')
+        block content

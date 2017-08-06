@@ -1,0 +1,9 @@
+extends usermanageframe
+
+block content
+  form(action='upload' method='post' enctype="multipart/form-data")
+    div
+      button.btn.btn-lg.btn-primary.btn-block(type="file") CSV 파일선택
+    p
+      button.btn.btn-lg.btn-primary.btn-block(type="submit") 수정
+      button.btn.btn-lg.btn-primary.btn-block(type="reset") 취소
