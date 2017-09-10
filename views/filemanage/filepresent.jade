@@ -1,3 +1,36 @@
 extends filemanageframe
 
+block head
+  link(rel='stylesheet', href='.../public/stylesheets/style.css')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+
 block content
+  table.board_list
+    tr
+      th No.
+      th Title
+      th writer
+      th Date
+      th Present
+      th Download
+    if(content)
+      - var count = 0;
+      each content in contents
+        -count++;
+        tr
+          td.number #{count}
+          td.title #{content.title}
+            a(href='/filepresent/show/:id')
+          td.writer #{content.writer}
+          td.date #{Date.now}
+          td.present
+            a(href='/filepresent/show/:content')
+            button.btn.btn-primary(type="button") Present
+          td.download
+              a(href='/filepresent/download/:content')
+              button.btn.btn-primary(type="button") Download
+    else
+      tr
+        td(colspan='5') no contents
+  div
+    a(href='/filepresent/upload') 업로드

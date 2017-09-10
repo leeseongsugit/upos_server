@@ -1,19 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-var User = require("../user");
+var User = require("../public/models/user_db");
 
 
 //Create
-router.post("/users", function(req, res){
-  var user = new User(req.body);
-
-  User.create(req.body, function(err, users) {
-    if(err) return res.status(500).send(err);
-    res.send("User Create successfully:\n" + users);
-  });
-});
-
 /* GET users listing. */
 router.get('/users', function(req, res) {
   User.find({ }, function(err, users) {

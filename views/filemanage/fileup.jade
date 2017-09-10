@@ -1,7 +1,7 @@
-extends mypageframe
+extends filemanageframe
 
 block content
-  form(action= 'upload' method='post' enctype="multipart/form-data")
+  form(action= '/filepresent/upload' method='post' enctype="multipart/form-data")
     div
       label 제목:
       input(type='text' name='title')
@@ -10,7 +10,7 @@ block content
       label 주차:
       select(name='weeks')
         option(value='') 주차
-        for item, i in ['1주차','2주차','3주차','4주차','5주차','6주차',]
+        for item, i in ['1주차','2주차','3주차','4주차','5주차','6주차']
           option(value= i+1)= item
   p
     div
@@ -26,4 +26,5 @@ block content
       input(type='file' name='userfile')
   p
     div
-      input(type='submit')
+      button.btn.btn-lg.btn-primary.btn-block(type="submit") 올리기
+      button.btn.btn-lg.btn-primary.btn-block(type="reset") 취소
