@@ -5,26 +5,28 @@ block content
     div
       label 제목:
       input(type='text' name='title')
-  p
-    div
-      label 주차:
-      select(name='weeks')
-        option(value='') 주차
-        for item, i in ['1주차','2주차','3주차','4주차','5주차','6주차']
-          option(value= i+1)= item
-  p
-    div
-      label 분류:
-      select(name='type')
-        option(value='') 유형
-        option(value='note') 강의노트
-        option(value='present') 발표자료
-        option(value='report') 과제물
-  p
-    div
-      label 파일:
-      input(type='file' name='userfile')
-  p
-    div
-      button.btn.btn-lg.btn-primary.btn-block(type="submit") 올리기
-      button.btn.btn-lg.btn-primary.btn-block(type="reset") 취소
+    p
+      div
+        label 주차:
+        select(name='weeks')
+          option(value='') 주차
+          for item, i in ['1주차','2주차','3주차','4주차','5주차','6주차']
+            option(value= i+1)= item
+      div
+        label 분류:
+        select(name='type')
+          option(value='') 유형
+          option(value='note') 강의노트
+          option(value='present') 발표자료
+          option(value='report') 과제물
+    p
+      div
+        textarea(name ='contents', rows='25', cols='80')
+    p
+      div
+        label 파일:
+        input(type='file' name='userfile')
+    p
+      div
+        button.btn.btn-lg.btn-primary.btn-block(type="submit") 올리기
+        button.btn.btn-lg.btn-primary.btn-block(type="reset") 취소

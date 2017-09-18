@@ -4,7 +4,7 @@ var stream = fs.createReadStream('../user/users.csv');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var masterList = [];
-mongoose.connect('mongodb://localhost/upos_user');
+mongoose.connect('mongodb://localhost/upos_db');
 var User = require("../public/models/user_db");
 
 //read in CSV as stream row by row

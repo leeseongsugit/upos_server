@@ -2,9 +2,10 @@ var mongoose = require('mongoose');
 
 var contentSchema = mongoose.Schema({
     writer: String,
-    password: String,
     title: String,
     contents: String,
+    weeks: Number,
+    type: String,
     comments: [{
         name: String,
         memo: String,

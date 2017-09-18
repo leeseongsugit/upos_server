@@ -50,7 +50,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 //세션 활성화
 app.use(session({
   secret : 'mysecret',
