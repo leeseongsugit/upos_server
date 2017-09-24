@@ -26,6 +26,8 @@ router.post('/register', function(req, res, next) {
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
+  var session = req.session;
+  session.username = req.body.username;
   res.redirect('/filepresent');
 });
 

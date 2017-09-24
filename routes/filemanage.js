@@ -7,7 +7,8 @@ var multer = require('multer');
 var fs = require('fs');
 var mongo = mongoose.mongo;
 var router = express.Router();
-var Contents = require('../public/models/content_db');
+var Content = require('../public/models/content_db');
+var dateFormat = require('dateformat');
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb){
@@ -20,7 +21,33 @@ var storage = multer.diskStorage({
 var upload = multer({storage: storage});
 
 router.get('/', function(req,res){
-  res.render('./filemanage/filepresent');
+    Content.find(function(err, data){
+      if(err)
+        return res.status(500).send({error: 'database failure'});
+      res.render('./filemanage/filepresent', {contents : data});
+      //res.json(data);
+    });
+});
+
+router.get('/api/:content_id', function(req,res){
+  Content.find({_id: req.params.content_id}, function(err, data){
+    if(err)
+      return res.status(500).send({error: err});
+    if(!book)
+      return res.status(404).send({error: 'book not found'});
+    res.render('./filemanage/filepresent', {contents : data});
+  });
+});
+
+// GET CONTENTS BY WRITER
+router.get('/api/:writer', function(req, res){
+    Content.find({writer: req.params.writer},  function(err, data){
+        if(err)
+          return res.status(500).send({error: err});
+        if(contents.length === 0)
+          return res.status(404).send({error: 'book not found'});
+        res.render('./filemanage/filepresent', {contents : data});
+    });
 });
 
 router.get('/upload', function(req, res){
@@ -31,32 +58,19 @@ router.post('/upload', upload.single('userfile'), function(req, res){
   console.log('upload post enter');
   try{
     var file = req.file;
-    var content = new Contents();
-
-    var originalname = '';
-    var filename = '';
-    var mimetype = '';
-    var size = 0;
-
-    console.log('upload variable initialize');
-
-    originalname = file.originalname;
-    filename = file.filename;
-    mimetype = file.mimetype;
-    size = file.size;
-
-    console.log('upload variable input');
+    var content = new Content();
+    var now = new Date();
 
     content.title = req.body.title;
-    content.writer = req.body.writer;
+    content.writer = req.session.username;
     content.contents = req.body.contents;
+    content.class = req.body.class;
     content.weeks = req.body.weeks;
     content.type = req.body.type;
-    content.date = Date.now();
-
+    content.date = dateFormat(now, "yy/mm/dd HH:MM:ss");
+    content.upFile = req.file;
+    console.log('upload variable input');
     console.log('upload db input');
-
-    console.log('present file info : ' + originalname + ' / ' + filename + ' / ' + mimetype + ' / ' + size );
 
     content.save(function(){
       res.redirect('/filepresent');
@@ -69,16 +83,28 @@ router.post('/upload', upload.single('userfile'), function(req, res){
 
 
 
-router.get('/show/:content', function(req,res){
-  res.send(content.contents);
-})
+router.get('/show/:content_id', function(req,res){
+  Content.find(function(err, data){
+    if(err)
+      return res.status(500).send({error: 'database failure'});
+    res.render('./filemanage/showcontents', {contents : data});
+    //res.json(data);
+  });
+});
+//진행중
 router.get('/present/:content', function(req, res){
   //pdf.js와 연동
 })
-
-router.get('/download/:content', function(req, res){
-  res.download('/upload/'+ req.params.content)
-})
+//진행중
+router.get('/download/:content_id', function(req, res){
+  Content.findOne({_id : req.params.content_id}, function(err, data){
+    var path = data.upFile[0].path;
+    var fileName = data.upFile[0].filename;
+    if(err)
+      return res.status(500).send({error: 'database failure'});
+    res.download(path, fileName);
+  });
+});
 /*//업로드 - 분산처리
 router.post('/upload', function(req, res){
   var title = req.body.title;  //inputText의 name Value를 가져옴
@@ -114,7 +140,7 @@ router.post('/upload', function(req, res){
 //Download 요청 처리
 router.get('/download/:id', function(req, res){
   var _id = req.query.id;
-  gfs.files.find({'_id': objectId})
+  gfs.files.find({'_id': objecDate.nowtId})
     .toArray(function(err, files) {
       if(err) res.send(err);
       var filename = files[0].filename;
@@ -137,4 +163,14 @@ router.get('/delete/:id', function(req, res){
   });
 });
 */
+function day_time(){
+  var now = new Date();
+  year = "" + now.getFullYear();
+  month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+  day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+  minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+  second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+  return year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
+}
 module.exports = router;
