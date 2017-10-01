@@ -24,7 +24,7 @@ block content
           td.writer #{content.writer}
           td.date #{content.date}
           td.present
-            a(href='/filepresent/show/#{content._id}')
+            a(href='/config/pdf/web/viewer.html?file=/#{content.upFile[0].path}')
               button.btn.btn-primary(type="button") Present
           td.download
               a(href='/filepresent/download/#{content._id}')

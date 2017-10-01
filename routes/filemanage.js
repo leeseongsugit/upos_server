@@ -9,10 +9,11 @@ var mongo = mongoose.mongo;
 var router = express.Router();
 var Content = require('../public/models/content_db');
 var dateFormat = require('dateformat');
+var pdf = require('pdf');
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb){
-    cb(null, 'upload/');
+    cb(null, 'public/upload/');
   },
   filename: function(req, file, cb){
     cb(null, file.originalname);
@@ -92,9 +93,18 @@ router.get('/show/:content_id', function(req,res){
   });
 });
 //진행중
-router.get('/present/:content', function(req, res){
-  //pdf.js와 연동
-})
+/*router.get('/present/:content_id', function(req, res){
+  Content.findOne({_id : req.params.content_id}, function(err, data){
+    var path = data.upFile[0].path;
+    var fileName = data.upFile[0].filename;
+    if(err)
+      return res.status(500).send({error: 'database failure'});
+    fs.readFile('/views/pdf/web/viewer.html', function(data){
+      res.writeHead(200,{'Content-Type':'text/html'});
+      res.end(data);
+    });
+  });
+})*/
 router.get('/download/:content_id', function(req, res){
   Content.findOne({_id : req.params.content_id}, function(err, data){
     var path = data.upFile[0].path;
@@ -102,6 +112,7 @@ router.get('/download/:content_id', function(req, res){
     if(err)
       return res.status(500).send({error: 'database failure'});
     res.download(path, fileName);
+    console.log(path + " / " + fileName);
   });
 });
 

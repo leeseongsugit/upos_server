@@ -20,14 +20,14 @@ block content
         tr
           td.number #{count}
           td.title
-            a(href='/filepresent/show/#{content.title}')  #{content.title}
+            a(href='/filepresent')  #{content.title}
           td.writer #{content.writer}
           td.date #{content.date}
           td.present
-            a(href='/filepresent/show/#{content.upFile._id}')
+            a(href='/filepresent/present/#{content._id}')
               button.btn.btn-primary(type="button") Present
           td.download
-              a(href='/filepresent/download/#{content.upFile._id}')
+              a(href='/filepresent/download/#{content._id}')
                 button.btn.btn-primary(type="button") Download
         tr
           td.contents #{content.contents}
