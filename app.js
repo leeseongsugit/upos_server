@@ -15,7 +15,6 @@ var multer = require('multer');
 var flash = require('connect-flash');
 var User = require('./public/models/user_db');
 var csv = require('fast-csv');
-//var vidStremer = require('vid-streamer');  // 동영상 스트리밍
 
 //db
 mongoose.connect('mongodb://localhost/upos_db')

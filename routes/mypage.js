@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get(['/','/mypage'], function(req, res){
-  res.render('./mypage/updateinfo', {username : req.session.username});
+  res.render('./mypage/updateinfo', { username : req.session.username});
 });
 
 router.post('/mypage', (req, res) => {

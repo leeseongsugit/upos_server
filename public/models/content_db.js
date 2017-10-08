@@ -4,7 +4,7 @@ var contentSchema = mongoose.Schema({
     writer: String,
     title: String,
     contents: String,
-    class: String,
+    classno: String,
     weeks: Number,
     type: String,
     comments: [{

@@ -9,7 +9,7 @@ var mongo = mongoose.mongo;
 var router = express.Router();
 var Content = require('../public/models/content_db');
 var dateFormat = require('dateformat');
-var pdf = require('pdf');
+var vidStreamer = require('vid-streamer');
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb){
@@ -30,25 +30,41 @@ router.get('/', function(req,res){
     });
 });
 //GET CONTENTS BY content_id not activate
-router.get('/api/:content_id', function(req,res){
-  Content.find({_id: req.params.content_id}, function(err, data){
-    if(err)
-      return res.status(500).send({error: err});
-    if(!data)
-      return res.status(404).send({error: 'book not found'});
-    res.render('./filemanage/filepresent', {contents : data});
-  });
-});
-
-// GET CONTENTS BY WRITER not activate
-router.get('/api/:writer', function(req, res){
-    Content.find({writer: req.params.writer},  function(err, data){
-        if(err)
-          return res.status(500).send({error: err});
-        if(contents.length === 0)
-          return res.status(404).send({error: 'book not found'});
-        res.render('./filemanage/filepresent', {contents : data});
+router.get('/searchList', function(req,res){
+  var classno = req.query.classno;
+  var type = req.query.type;
+  if(classno == '' && type == ''){
+    Content.find(function(err, data){
+      if(err)
+        return res.status(500).send({error: 'database failure'});
+      res.render('./filemanage/filepresent', {contents : data});
+      //res.json(data);
     });
+  }else if(classno == ''){
+    Content.find({type : type}, function(err, data){
+      if(err){
+        return res.status(500).send({error: 'database failure'});
+        console.log(err);
+      }
+      res.render('./filemanage/filepresent', {contents : data});
+    });
+  }else if(type == ''){
+    Content.find({classno : classno}, function(err, data){
+        if(err){
+          return res.status(500).send({error: 'database failure'});
+          console.log(err);
+        }
+        res.render('./filemanage/filepresent', {contents : data});
+      });
+  }else{
+    Content.find({classno : classno, type : type}, function(err, data){
+      if(err){
+        return res.status(500).send({error: 'database failure'});
+        console.log(err);
+      }
+      res.render('./filemanage/filepresent', {contents : data});
+    });
+  }
 });
 
 router.get('/upload', function(req, res){
@@ -65,7 +81,7 @@ router.post('/upload', upload.single('userfile'), function(req, res){
     content.title = req.body.title;
     content.writer = req.session.username;
     content.contents = req.body.contents;
-    content.class = req.body.class;
+    content.classno = req.body.classno;
     content.weeks = req.body.weeks;
     content.type = req.body.type;
     content.date = dateFormat(now, "yy/mm/dd HH:MM:ss");
@@ -92,19 +108,23 @@ router.get('/show/:content_id', function(req,res){
     //res.json(data);
   });
 });
-//진행중
-/*router.get('/present/:content_id', function(req, res){
+
+router.get('/present/:content_id', function(req, res){
   Content.findOne({_id : req.params.content_id}, function(err, data){
     var path = data.upFile[0].path;
     var fileName = data.upFile[0].filename;
     if(err)
       return res.status(500).send({error: 'database failure'});
-    fs.readFile('/views/pdf/web/viewer.html', function(data){
-      res.writeHead(200,{'Content-Type':'text/html'});
-      res.end(data);
-    });
+
+    if(data.upFile[0].mimetype == 'application/pdf'){
+      res.redirect('/config/pdf/web/viewer.html?file=/upload/'+fileName);
+    }else if(data.upFile[0].mimetype == 'video/mp4'){
+      res.redirect('/upload/'+fileName);
+    }else if(data.upFile[0].mimetype == 'application/vnd.ms-powerpoint'){
+      res.redirect('/upload/'+fileName);
+    }
   });
-})*/
+})
 router.get('/download/:content_id', function(req, res){
   Content.findOne({_id : req.params.content_id}, function(err, data){
     var path = data.upFile[0].path;
