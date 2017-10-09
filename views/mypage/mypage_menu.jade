@@ -1,11 +1,12 @@
 doctypehtml
 html
   head
+    link(rel='stylesheet', media = 'screen', type = 'text/css', href='/stylesheets/submenubar.css')
   body
-    link(rel='stylesheet', media = 'screen', type = 'text/css', href='.../public/stylesheets/submenubar.css')
-    #nav
-      ul
-        li
-          a(href='/mypage') 기본정보 변경
-        li
-          a(href='/mypage/updatepassword') 비밀번호 변경
+    #sub_menu
+      #my_menu
+        ul
+          li
+            a(href='/mypage') 기본정보 변경
+          li
+            a(href='/mypage/updatepassword') 비밀번호 변경

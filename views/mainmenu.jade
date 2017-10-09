@@ -1,17 +1,15 @@
 doctypehtml
 html
   head
+    link(rel='stylesheet', media = 'screen', type = 'text/css', href='/stylesheets/menubar.css')
   body
-    link(rel='stylesheet', media = 'screen', type = 'text/css', href='../public/stylesheets/menubar.css')
-    #nav
+    #main
       ul
         li
           a(href='/filepresent') FILE MANAGER
         li
           a(href='/mypage') MY PAGE
 
-    div
-      a(href='/logout')
-        button.btn.btn-primary(type="button") Logout
-        //li
-        //a(href='/user') USER INPUT(ROOT)
+      #logout
+        a(href='/logout')
+          button.btn.btn-primary(type="button") Logout

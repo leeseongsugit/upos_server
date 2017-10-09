@@ -1,30 +1,45 @@
-#nav {
-        width:150px;
-        height:100px;
-        background-color:white;
+#sub_menu {
+        height:800px;
+        background-color:lightgrey;
 }
-#nav ul {
+#my_menu ul {
+        list-style:none;
         /* 메뉴바 앞 불필요한 공간 제거 */
-        padding-left:0px;
-        /* 오른쪽 정렬 */
-        float:left;
+        padding-left:10px;
+        /* 가운데 정렬 */
+        float:center;
         /* 미세조정 */
-        margin: 10px 10px 10px 10px;
+        margin: 0px 0px 10px 0px;
 }
-#nav ul li{
-        /* border line make at left */
-        border-left: 1px solid black;
+#my_menu ul li{
+        margin-bottom:5px;
         /* 메뉴와 경계선 사이의 간격 넓히기 */
-        padding:0px 7px 0px 10px;
+        padding:5px 0px 10px 0px;
+        font-size:16px;
 }
-#nav ul li a {
+#my_menu ul li:first-child{
+        /* 메뉴와 경계선 사이의 간격 넓히기 */
+        padding:40px 0px 10px 0px;
+        font-size:16px;
+}
+#my_menu ul li a {
         /* 밑줄 제거 */
         text-decoration:none;
         /* 메뉴 색 변경 */
         color:black;
 }
-#nav_menu a:hover{
+#my_menu a:hover{
         /*  링크에 마우스 롤 오버시 하단에 밑줄 생김 */
-        color:#D4F4FA;
-        border-bottom:3px solid black;
+        color:Dimgrey;
+        border-bottom:2px solid white;
+}
+#fm_menu {
+        /* 메뉴바 앞 불필요한 공간 제거 */
+        padding:20px 0px 10px 0px;
+        /* 가운데 정렬 */
+        float:center;
+        /* 미세조정 */
+}
+#fm_menu h2{
+        margin: 20px 0px 10px 0px;
 }

@@ -1,8 +1,18 @@
-body {
-  padding: 50px;
+#board {
+  padding-left: 15px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
+#board a {
   color: #00B7FF;
+}
+
+#board tr{
+  text-align:center;
+  height:35px;
+  border-bottom:1px solid black;
+}
+#board th{
+  border-bottom:2px solid black;
+  padding: 0px 15px 0px 15px;
 }

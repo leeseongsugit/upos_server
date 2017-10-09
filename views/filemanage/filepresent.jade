@@ -1,14 +1,14 @@
 extends filemanageframe
 
 block head
-  link(rel='stylesheet', href='.../public/stylesheets/style.css')
+  link(rel='stylesheet', href='/stylesheets/style.css')
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
 
 block content
-  table.board_list
+  table(id='board')
     tr
-      th No.
-      th Title
+      th(id='no') No.
+      th(id='title') Title
       th writer
       th Date
       th Present
