@@ -1,39 +1,45 @@
 extends filemanageframe
+block head
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
 
 block content
-  form(action= '/filepresent/upload' method='post' enctype="multipart/form-data")
-    div
-      label 제목:
-      input(type='text' name='title')
-    p
-      div
-        label 강의:
-        select(name='classno')
-          option(value='') 강의명
-          option(value='ISE100') 컴퓨터 보안
-          option(value='ISE200') 데이터 베이스
-          option(value='BCD100') 경영학 개론
-      div
-        label 주차:
-        select(name='weeks')
-          option(value='') 주차
-          for item, i in ['1주차','2주차','3주차','4주차','5주차','6주차']
-            option(value= i+1)= item
-      div
-        label 분류:
-        select(name='type')
-          option(value='') 유형
-          option(value='note') 강의노트
-          option(value='present') 발표자료
-          option(value='report') 과제물
-    p
-      div
-        textarea(name ='contents', rows='25', cols='80')
-    p
+  div(id='board')
+    form(action= '/filepresent/upload' method='post' enctype="multipart/form-data")
+      div(id= 'upmain')
+        label 제목
+        input(type='text' name='title')
+      p
+      div(id='selectbox')
+        div
+          label 강의
+          select(name='classno')
+            option(value='') 강의명
+            option(value='ISE100') 컴퓨터 보안
+            option(value='ISE200') 데이터 베이스
+            option(value='BCD100') 경영학 개론
+        div
+          label 주차
+          select(name='weeks')
+            option(value='') 주차
+            for item, i in ['1주차','2주차','3주차','4주차','5주차','6주차']
+              option(value= i+1)= item
+        div
+          label 분류
+          select(name='type')
+            option(value='') 유형
+            option(value='note') 강의노트
+            option(value='present') 발표자료
+            option(value='report') 과제물
+      p
+      div(id='upcontents')
+        textarea(name ='contents', rows='20', cols='70')
+      p
       div
         label 파일:
         input(type='file' name='userfile')
-    p
+      p
       div
         button.btn.btn-lg.btn-primary.btn-block(type="submit") 올리기
-        button.btn.btn-lg.btn-primary.btn-block(type="reset") 취소
+        a(href='/filepresent')
+          button.btn.btn-lg.btn-primary.btn-block(type="button") 취소

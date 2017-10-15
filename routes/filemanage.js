@@ -1,5 +1,6 @@
 
 var express = require('express');
+var passport = require('passport');
 var grid = require('gridfs-stream');
 var mongoose = require('mongoose');
 var ObjectID = require('mongoose').mongo.objectID;
@@ -22,13 +23,15 @@ var storage = multer.diskStorage({
 var upload = multer({storage: storage});
 
 router.get('/', function(req,res){
-    Content.find(function(err, data){
-      if(err)
-        return res.status(500).send({error: 'database failure'});
-      res.render('./filemanage/filepresent', {contents : data});
-      //res.json(data);
-    });
+  Content.find(function(err, data){
+    if(err)
+      return res.status(500).send({error: 'database failure'});
+    res.render('./filemanage/filepresent', {contents : data});
+    //res.json(data);
+  });
 });
+
+
 //GET CONTENTS BY content_id not activate
 router.get('/searchList', function(req,res){
   var classno = req.query.classno;
@@ -98,6 +101,16 @@ router.post('/upload', upload.single('userfile'), function(req, res){
   }
 });
 
+router.get('/download/:content_id', function(req, res){
+  Content.findOne({_id : req.params.content_id}, function(err, data){
+    var path = data.upFile[0].path;
+    var fileName = data.upFile[0].filename;
+    if(err)
+      return res.status(500).send({error: 'database failure'});
+    res.download(path, fileName);
+    console.log(path + " / " + fileName);
+  });
+});
 
 
 router.get('/show/:content_id', function(req,res){
@@ -120,21 +133,9 @@ router.get('/present/:content_id', function(req, res){
       res.redirect('/config/pdf/web/viewer.html?file=/upload/'+fileName);
     }else if(data.upFile[0].mimetype == 'video/mp4'){
       res.redirect('/upload/'+fileName);
-    }else if(data.upFile[0].mimetype == 'application/vnd.ms-powerpoint'){
-      res.redirect('/upload/'+fileName);
     }
   });
 })
-router.get('/download/:content_id', function(req, res){
-  Content.findOne({_id : req.params.content_id}, function(err, data){
-    var path = data.upFile[0].path;
-    var fileName = data.upFile[0].filename;
-    if(err)
-      return res.status(500).send({error: 'database failure'});
-    res.download(path, fileName);
-    console.log(path + " / " + fileName);
-  });
-});
 
 function day_time(){
   var now = new Date();

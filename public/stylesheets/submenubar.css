@@ -5,9 +5,9 @@
 #my_menu ul {
         list-style:none;
         /* 메뉴바 앞 불필요한 공간 제거 */
-        padding-left:10px;
+        padding-left:40px;
         /* 가운데 정렬 */
-        float:center;
+        float:left;
         /* 미세조정 */
         margin: 0px 0px 10px 0px;
 }

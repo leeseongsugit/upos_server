@@ -6,9 +6,14 @@ Introduce
 
 
 Command
-  
+
     npm init
     (sudo) npm install --save
+
+    if you don't install mongoDB, this site may help you
+        https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+
+    node app.js (site : https://localhost:3000)
 
 Using Module list
 
@@ -34,14 +39,12 @@ Using Module list
     "passport-session": "^1.0.2",
     "serve-favicon": "^2.4.3",
     "vid-streamer": "^1.0.0"
-    
+
     && pdf.js
-    
+
     Reference
-      - login & register function : 
+      - login & register function :
       - pdf function : http://nomadism.co.kr/14
       - vid-stream function : http://yjungcomp.tistory.com/8
-      
--------------------------------------------------------
 
-          
+-------------------------------------------------------

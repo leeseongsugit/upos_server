@@ -51,6 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //세션 활성화
 app.use(session({
+  key : 'sid',
   secret : 'mysecret',
   resave: false,
   saveUninitialized: true

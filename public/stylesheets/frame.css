@@ -1,0 +1,8 @@
+body{
+  background-color:Black;
+}
+#frame {
+        width: 900px;
+        margin: 0 auto;
+        font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}

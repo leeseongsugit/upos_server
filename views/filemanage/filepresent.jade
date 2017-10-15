@@ -5,31 +5,31 @@ block head
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
 
 block content
-  table(id='board')
-    tr
-      th(id='no') No.
-      th(id='title') Title
-      th writer
-      th Date
-      th Present
-      th Download
-    if(contents)
-      - var count = 0;
-      each content in contents
-        -count++;
-        tr
-          td.number #{count}
-          td.title
-            a(href='/filepresent/show/#{content._id}')  #{content.title}
-          td.writer #{content.writer}
-          td.date #{content.date}
-          td.present
-            a(href='/filepresent/present/#{content._id}')
-              button.btn.btn-primary(type="button") Present
-          td.download
-              a(href='/filepresent/download/#{content._id}')
-                button.btn.btn-primary(type="button") Download
-    tr
-  div
-    a(href='/filepresent/upload')
-      button.btn.btn-primary(type="button") Upload
+  div(id='board')
+    table
+      tr
+        th(id='no') No.
+        th(id='title') Title
+        th writer
+        th Date
+        th Present
+        th Download
+      if(contents)
+        - var count = 0;
+        each content in contents
+          -count++;
+          tr
+            td.number #{count}
+            td.title
+              a(href='/filepresent/show/#{content._id}')  #{content.title}
+            td.writer #{content.writer}
+            td.date #{content.date}
+            td.present
+              a(href='/filepresent/present/#{content._id}')
+                button.btn.btn-primary(type="button") Present
+            td.download
+                a(href='/filepresent/download/#{content._id}')
+                  button.btn.btn-primary(type="button") Download
+    div(id = 'submit')
+      a(href='/filepresent/upload')
+        button.btn.btn-primary(type="button") Upload

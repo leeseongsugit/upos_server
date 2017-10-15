@@ -1,6 +1,7 @@
 #main {
         //width:700px;
         height:100px;
+        font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
         background-color:DimGrey;
 }
 #main ul {
